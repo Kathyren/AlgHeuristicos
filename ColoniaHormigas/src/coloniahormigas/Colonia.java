@@ -100,7 +100,7 @@ public class Colonia {
 
             if (mejor.getAptitud() > hormiga.getAptitud()) {
                 mejor = hormiga.clonar();
-                texto = texto + "Hormiga: " + mejor.aString() + "  Aptitud: " +mejor.getAptitud() + "\n"; // Solo sirve con el problema ¡Hola Mundo!
+                texto = texto + "Hormiga: " + mejor.aString() + "  Aptitud: " +mejor.getAptitud() + "\n "; // Solo sirve con el problema ¡Hola Mundo!
             }
         }
     }
