@@ -120,16 +120,51 @@ public class Colonia {
             
             
         }
-            iF = local.getTour()[47];
-            jF = local.getTour()[0];
-            feromona[iF][jF] = nuevaFeromona;
-            feromona[jF][iF] = nuevaFeromona;
+
             
         iF = local.getTour()[tamañoProblema - 1];
         jF = local.getTour()[0];
-        nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+        //nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
         feromona[iF][jF] = nuevaFeromona;
         feromona[jF][iF] = nuevaFeromona;
+        for (int i=0;i<tamañoProblema -1; i++)
+        {
+            int iM= mejor.getTour()[i];
+            int jM= mejor.getTour()[i+1];
+            
+            for (int j = 0; j < tamañoProblema - 1; j++) 
+            {
+                iF = local.getTour()[j];
+                jF = local.getTour()[j + 1];
+                if (iF==iM && jF==jM)
+                {
+                    nuevaFeromona=1d/mejor.getAptitud();
+                    feromona[iF][jF] = nuevaFeromona;
+                    feromona[jF][iF] = nuevaFeromona;
+                }
+
+
+            }
+            
+            iF = local.getTour()[tamañoProblema-1];
+            jF = local.getTour()[0];
+                if (iF==iM && jF==jM)
+                {
+                    nuevaFeromona=1d/mejor.getAptitud();
+                    feromona[iF][jF] = nuevaFeromona;
+                    feromona[jF][iF] = nuevaFeromona;
+                }
+        }
+
+            
+        iF = local.getTour()[tamañoProblema - 1];
+        jF = local.getTour()[0];
+        //nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+        feromona[iF][jF] = nuevaFeromona;
+        feromona[jF][iF] = nuevaFeromona;
+        
+        
+        
     }
 
     private void actualizarFeromonaGlobal() {
