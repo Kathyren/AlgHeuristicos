@@ -162,6 +162,21 @@ public class Hormiga {
         aptitud += distancias[x][y];*/
         // Fin código
     }
+    
+    void opLocal(float [][] dat){
+        int [] camino = getTour();
+        for (int i = 0; i < 46; i++) {
+            for (int j = i +1 ; j < 47; j++) {
+                if((dat[camino[i]][camino[i+1]] + dat[camino[j]][camino[j+1]]) > dat[camino[i]][camino[j]] + dat[camino[i+1]][camino[j+1]]  ) {
+                    int aux = camino[j];
+                    camino[j] = camino[i +1];
+                    camino[i+1] = aux;
+                }
+                        
+            }
+            
+        }
+    }
 
     public void optimizar() {
         // Agregar su código de optimización
