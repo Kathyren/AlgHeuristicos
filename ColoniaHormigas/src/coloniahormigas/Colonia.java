@@ -15,7 +15,7 @@ public class Colonia {
     private double[][] distancias;
 
     private double[][] feromona;
-    private double feromonaInicial;
+    private double feromonaInicial=0.5;
     private double reduccionFeromona;
 
     private Hormiga[] hormigas;
@@ -61,7 +61,7 @@ public class Colonia {
         mejor = Hormiga.candidatoInicial(tamañoProblema, distancias);
         // En este punto, deben usar algún método de optimización para mejorar los resultados. Ejemplo: mejor.optimizar();
         //mejor.optimizar();
-        feromonaInicial = 1d / (tamañoProblema * mejor.getAptitud());
+       // feromonaInicial = 1d / (tamañoProblema * mejor.getAptitud());
 
         for (int f = 0; f < tamañoProblema; f++) {
             for (int c = 0; c < tamañoProblema; c++) {
@@ -95,7 +95,7 @@ public class Colonia {
     private void construirCaminos() {
         for (Hormiga hormiga : hormigas) {
             hormiga.construirCamino(feromona);
-            //hormiga.optimizar();
+            hormiga.optimizar();
             actualizarFeromonaLocal(hormiga);
 
             if (mejor.getAptitud() > hormiga.getAptitud()) {
@@ -108,16 +108,23 @@ public class Colonia {
     private void actualizarFeromonaLocal(Hormiga local) {
         int iF;
         int jF;
-        double nuevaFeromona;
+        double nuevaFeromona=0;
 
         for (int j = 0; j < tamañoProblema - 1; j++) {
             iF = local.getTour()[j];
             jF = local.getTour()[j + 1];
-            nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+           // nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+           nuevaFeromona=1d/mejor.getAptitud();
             feromona[iF][jF] = nuevaFeromona;
             feromona[jF][iF] = nuevaFeromona;
+            
+            
         }
-
+            iF = local.getTour()[47];
+            jF = local.getTour()[0];
+            feromona[iF][jF] = nuevaFeromona;
+            feromona[jF][iF] = nuevaFeromona;
+            
         iF = local.getTour()[tamañoProblema - 1];
         jF = local.getTour()[0];
         nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
