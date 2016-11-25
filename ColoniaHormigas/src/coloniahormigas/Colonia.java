@@ -60,8 +60,8 @@ public class Colonia {
         feromona = new double[tamañoProblema][tamañoProblema];
         mejor = Hormiga.candidatoInicial(tamañoProblema, distancias);
         // En este punto, deben usar algún método de optimización para mejorar los resultados. Ejemplo: mejor.optimizar();
-        //mejor.optimizar();
-       // feromonaInicial = 1d / (tamañoProblema * mejor.getAptitud());
+       mejor.optimizar();
+       
 
         for (int f = 0; f < tamañoProblema; f++) {
             for (int c = 0; c < tamañoProblema; c++) {
@@ -100,7 +100,7 @@ public class Colonia {
 
             if (mejor.getAptitud() > hormiga.getAptitud()) {
                 mejor = hormiga.clonar();
-                texto = texto + "Hormiga: " + mejor.aString() + "  Aptitud: " +mejor.getAptitud() + "\n "; // Solo sirve con el problema ¡Hola Mundo!
+                texto = texto + "Hormiga: " + "  Aptitud: " +mejor.getAptitud() + "\n "; // Solo sirve con el problema ¡Hola Mundo!
             }
         }
     }
@@ -113,7 +113,7 @@ public class Colonia {
         for (int j = 0; j < tamañoProblema - 1; j++) {
             iF = local.getTour()[j];
             jF = local.getTour()[j + 1];
-           // nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+           
            nuevaFeromona=1d/mejor.getAptitud();
             feromona[iF][jF] = nuevaFeromona;
             feromona[jF][iF] = nuevaFeromona;
@@ -124,7 +124,7 @@ public class Colonia {
             
         iF = local.getTour()[tamañoProblema - 1];
         jF = local.getTour()[0];
-        //nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+        
         feromona[iF][jF] = nuevaFeromona;
         feromona[jF][iF] = nuevaFeromona;
         for (int i=0;i<tamañoProblema -1; i++)
@@ -159,7 +159,7 @@ public class Colonia {
             
         iF = local.getTour()[tamañoProblema - 1];
         jF = local.getTour()[0];
-        //nuevaFeromona = (1d - reduccionFeromona) * feromona[iF][jF] + (reduccionFeromona * feromonaInicial);
+       
         feromona[iF][jF] = nuevaFeromona;
         feromona[jF][iF] = nuevaFeromona;
         

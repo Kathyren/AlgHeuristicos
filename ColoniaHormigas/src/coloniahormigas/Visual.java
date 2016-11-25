@@ -22,7 +22,56 @@ public class Visual extends javax.swing.JFrame {
     /**
      * Creates new form Visual
      */
-    final int[][] COORDENADAS = {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {4, 0}, {5, 0}, {6, 0}, {7, 0}, {8, 0}, {9, 0}, {10, 0}, {11, 0}};
+    final int[][] COORDENADAS = {
+    {6734 ,1453},
+{2233 ,10},
+{5530 ,1424},
+{401 ,841},
+{3082 ,1644},
+{7608 ,4458},
+{7573 ,3716},
+{7265 ,1268},
+{6898 ,1885},
+{1112 ,2049},
+{5468 ,2606},
+{5989, 2873},
+{4706, 2674},
+{4612, 2035},
+{6347, 2683},
+{6107, 669},
+{7611, 5184},
+{7462, 3590},
+{7732, 4723},
+{5900, 3561},
+{4483, 3369},
+{6101, 1110},
+{5199, 2182},
+{1633, 2809},
+{4307, 2322},
+{675 ,1006},
+{7555 ,4819},
+{7541 ,3981},
+{3177 ,756},
+{7352, 4506},
+{7545 ,2801},
+{3245 ,3305},
+{6426 ,3173},
+{4608 ,1198},
+{23 ,2216},
+{7248 ,3779},
+{7762 ,4595},
+{7392 ,2244},
+{3484 ,2829},
+{6271 ,2135},
+{4985 ,140},
+{1916 ,1569},
+{7280 ,4899},
+{7509 ,3239},
+{10 ,2676},
+{6807 ,2993},
+{5185 ,3258},
+{3023 ,1942}
+    };
 
     private Button btnInicializar;
     private Button btnEjecutar;
@@ -123,8 +172,8 @@ public class Visual extends javax.swing.JFrame {
 public void execute() {
         Hormiga mejor = colonia.buscarSolucion(1000);
         
-        //((DefaultListModel)lbx_r.getModel()).addElement(list.getText() + colonia.getProceso() + "Mejor Hormiga Final: " + mejor.aString() + "  Aptitud: " +mejor.getAptitud() + "\n");
-        model.addElement( "\n"+colonia.getProceso() + "Mejor Hormiga Final: " + mejor.aString() + "  Aptitud: " +mejor.getAptitud() + "\n");
+        
+        model.addElement( "\n"+colonia.getProceso() +  "  Aptitud: " +mejor.getAptitud() + "\n");
         lbx_r.setModel(model);
     }
  public void start(Stage stage) {
@@ -145,10 +194,10 @@ public void execute() {
     }
 
     public void begin() {
-        //list.clear();
-        colonia = new Colonia(COORDENADAS.length, COORDENADAS, 12, 0.1);
-        //((DefaultListModel)lbx_r.getModel()).addElement("Mejor Hormiga Inicial: " + colonia.getMejor().aString() + "  Aptitud: " +colonia.getMejor().getAptitud() + "\n");
-        model.addElement("Mejor Hormiga Inicial: " + colonia.getMejor().aString() + "  Aptitud: " +colonia.getMejor().getAptitud() + "\n");
+        
+        colonia = new Colonia(COORDENADAS.length, COORDENADAS, 10, 0.1);
+        
+        model.addElement("Mejor Hormiga Inicial: "  + "  Aptitud: " +colonia.getMejor().getAptitud() + "\n");
         lbx_r.setModel(model);
     }
 

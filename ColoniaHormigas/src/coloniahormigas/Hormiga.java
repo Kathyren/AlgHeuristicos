@@ -16,7 +16,8 @@ import java.util.stream.IntStream;
 public class Hormiga {
     private int tamañoProblema;
     private double[][] distancias;
-
+    private int alpha = 2;
+    private int beta = 2;
     private int[] tour;
     private double aptitud;
 
@@ -87,9 +88,8 @@ public class Hormiga {
     public double getAptitud() {
         return aptitud;
     }
-
     public void construirCamino(double[][] feromona) {
-        ThreadLocalRandom random = ThreadLocalRandom.current();
+    ThreadLocalRandom random = ThreadLocalRandom.current();
 
         tour[0] = random.nextInt(0, tamañoProblema);
 
@@ -103,7 +103,11 @@ public class Hormiga {
             for (int j = 0; j < tamañoProblema; j++) {
                 if (!ciudadesVisitadas[j]) {
                     int k = tour[i - 1];
-                    feromonaTour[j] = 1d / distancias[k][j] * feromona[k][j];
+                    //feromonaTour[j] = 1d / distancias[k][j] * feromona[k][j];
+                    if (k != j)
+                        feromonaTour[j] =  (Math.pow(feromona[k][j],alpha) * Math.pow(1d/distancias[k][j],beta));
+                    else
+                        feromonaTour[j] =  0;                   
                     totalFeromona += feromonaTour[j];
                 }
             }
@@ -114,13 +118,13 @@ public class Hormiga {
                 coeficiente = random.nextFloat();
             }
 
-            double feromonaRandom = totalFeromona * coeficiente;
+            double feromonaRandom =  coeficiente;
             double sumaFeromona = 0;
             int indice = 0;
 
             while (sumaFeromona < feromonaRandom) {
                 if (!ciudadesVisitadas[indice]) {
-                    sumaFeromona += feromonaTour[indice];
+                    sumaFeromona += feromonaTour[indice]/totalFeromona;
                 }
 
                 indice++;
@@ -131,23 +135,23 @@ public class Hormiga {
         }
 
         calcularAptitud();
-    }
+}
 
     private void calcularAptitud() {
         // Código para calcular la aptitud en el problema ¡Hola Mundo!
-        final int[] OPTIMO = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
+        /*final int[] OPTIMO = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
         aptitud = 34;
 
         for (int i = 0; i < tamañoProblema; i++) {
             if (tour[i] == OPTIMO[i]) {
                 aptitud -= 1;
             }
-        }
+        }*/
         // Fin ódigo
 
 
         // Código para calcular la aptitud en el TSP
-        /*aptitud = 0;
+        aptitud = 0;
         int x;
         int y;
 
@@ -159,7 +163,7 @@ public class Hormiga {
 
         x = tour[tamañoProblema - 1];
         y = tour[0];
-        aptitud += distancias[x][y];*/
+        aptitud += distancias[x][y];
         // Fin código
     }
 
