@@ -24,6 +24,7 @@ public class Swarm {
     double k;
     double wMin,wMax,w;//factor de inhercia
     Particle[] particulas;
+     private double[][] datos= new double[48][48];
     
     
     
@@ -32,20 +33,44 @@ public class Swarm {
         c1 = C1max;
         c2 = C2min;
         particulas = new Particle[N_CIUDADES];
+        for (int i=0; i<N_CIUDADES; i++)
+        {
+            particulas[i]= new Particle(new Capitals());
+        }
+        CalcularDistancias(datos);
+    }
+    public String Ejecutar()
+    {
+        for (int i=0; i<IterMax;i++)
+        {
+            Generación();
+            iter=i;
+            
+        }
+       // return escribirSolucion();
+       return String.valueOf( apGBest);
+        
     }
     public void Generación()
     {
-        double mejor;
+        double aptAnt = 0; 
         for (int i=0; i<N_CIUDADES; i++)
         {
-          mejor=  particulas[i].calcAptitud();
-          if (mejor<apGBest)
-          {
-              gBest=particulas[i].getPath();
-              apGBest=mejor;
-          }
+            aptAnt = particulas[i].getAptitud();
+            particulas[i].calcAptitud(datos);
+            if (particulas[i].getAptitud()<aptAnt){
+                particulas[i].setPbest(particulas[i].getPath());
+            }
+            if (particulas[i].getAptitud()<apGBest)
+            {
+                gBest=particulas[i].getPath();
+                apGBest=particulas[i].getAptitud();
+            }
         }
         actualizar();
+        for (int i=0; i<N_CIUDADES; i++){
+            particulas[i].cambiarRutas(w,c1,c2,gBest);
+        }
     }
     public void actualizar()
     {
@@ -54,6 +79,27 @@ public class Swarm {
         w= (wMin-wMax)/(IterMax-1)*iter-1+wMax;
         int o= c1+c2;
         k= 2 / Math.abs(2-o-Math.pow(Math.pow(o^2-4*o,2),0.5));
+    }
+    public static void CalcularDistancias(double [][] dat){
+        Capitals capi = new Capitals();
+        for (int i = 0; i < 48; i++) {
+            for (int j = 0; j < 48; j++) {
+                if(i != j)
+                    dat[i][j]= distacia(i,j,capi);
+            }
+        }
+    }
+     public static float distacia(int i, int j, Capitals c){
+        return (float) Math.sqrt( Math.pow((c.c[j].x - c.c[i].x), 2) +  Math.pow((c.c[j].y - c.c[i].y), 2));
+    }
+
+    private String escribirSolucion() {
+        String R="";
+        for (int i=0; i<N_CIUDADES; i++)
+        {
+            
+        }
+        return R;
     }
     
     

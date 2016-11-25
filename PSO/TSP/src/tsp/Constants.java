@@ -18,6 +18,6 @@ public final class Constants {
     public static final int C2max=30;
     public static final int Kmin=20;
     public static final int Kmax=90;
-    public static final int IterMax=1000;
+    public static final int IterMax=100;
     
 }

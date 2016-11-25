@@ -5,12 +5,14 @@
  */
 package tsp;
 
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Carlos Antonio
  */
 public class Main extends javax.swing.JFrame {
-
+DefaultListModel<String> model = new DefaultListModel<>();
     /**
      * Creates new form Main
      */
@@ -29,7 +31,7 @@ public class Main extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        lbl_r = new javax.swing.JList<>();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -48,7 +50,7 @@ public class Main extends javax.swing.JFrame {
             .addGap(0, 537, Short.MAX_VALUE)
         );
 
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(lbl_r);
 
         jButton2.setText("Ejecutar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -99,6 +101,11 @@ public class Main extends javax.swing.JFrame {
         model.clear();
         insertarLista(Ciudades(a));
         */
+        
+        Swarm banco = new Swarm();
+        //banco.Ejecutar();
+        model.addElement( "\n  Aptitud: " + banco.Ejecutar() + "\n");
+        lbl_r.setModel(model);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -138,9 +145,8 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton2;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JList<String> lbl_r;
     // End of variables declaration//GEN-END:variables
 }

@@ -16,21 +16,21 @@ public class Particle {
     private double[] velocidad;
     private int cd = 48;
     //constructor de la particula
-    public void Particle(){ 
+    public  Particle(){ 
         path = new int[cd];
         for (int i = 0; i < cd ; i++) {
             path[i] = -1;
         }        
         pBest = new int[cd];
         velocidad = new double[cd];
-        aptitud = 0;        
+        aptitud = 999999;        
     }
-    public void Particle(Capitals cap){ 
+    public  Particle(Capitals cap){ 
         path = new int[cd];
         path = cap.Revolver();
         pBest = path.clone();
         velocidad = new double[cd];
-        aptitud = 0;        
+        aptitud = 9999999;        
     }
     //public void Particle(){ }
     public double calcAptitud(double[][] dat){ 
@@ -46,7 +46,24 @@ public class Particle {
             velocidad[i] = w*velocidad[i] + c1 * Math.random()*(pBest[i]-path[i])+c2*Math.random()*(gBest[i]-path[i]);
         }        
     }
-    public void actuPath(){ }
+    public int[] getPbest(){
+        return pBest;
+    }
+    public void setPbest(int[] ruta){
+        pBest = ruta.clone();
+    }
+    public double getAptitud(){
+        return aptitud;
+    }
+    public void actuPath(){ 
+    }
+    /**
+     * 
+     * @param k1
+     * @param k2
+     * @param k3
+     * @param gBest 
+     */
     public void cambiarRutas(double k1, double k2, double k3, int[] gBest){
         for(int i=0; i < path.length; i++){
             double r = Math.random()/100;
