@@ -11,6 +11,7 @@ import static tsp.Constants.C1min;
       import static tsp.Constants.C2max;
       import static tsp.Constants.Kmin;
       import static tsp.Constants.Kmax;
+import static tsp.Constants.IterMax;
 
 /**
  *
@@ -20,6 +21,7 @@ public class Swarm {
     int[] gBest;//Arreglo del mejor camino 
     double apGBest;//aptitud del mejor camino de todos los tiempos
     int c1,c2,iter;//factores de cambio
+    double k;
     double wMin,wMax,w;//factor de inhercia
     Particle[] particulas;
     
@@ -43,6 +45,15 @@ public class Swarm {
               apGBest=mejor;
           }
         }
+        actualizar();
+    }
+    public void actualizar()
+    {
+        c1= (C1min-C1max)/IterMax*iter+C1max;
+        c2= (C2max-C2min)/IterMax*iter+C2min;
+        w= (wMin-wMax)/(IterMax-1)*iter-1+wMax;
+        int o= c1+c2;
+        k= 2 / Math.abs(2-o-Math.pow(Math.pow(o^2-4*o,2),0.5));
     }
     
     

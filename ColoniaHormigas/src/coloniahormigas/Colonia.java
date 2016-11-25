@@ -115,8 +115,8 @@ public class Colonia {
             jF = local.getTour()[j + 1];
            
            nuevaFeromona=1d/mejor.getAptitud();
-            feromona[iF][jF] = nuevaFeromona;
-            feromona[jF][iF] = nuevaFeromona;
+            feromona[iF][jF] += nuevaFeromona;
+            feromona[jF][iF] += nuevaFeromona;
             
             
         }
@@ -125,35 +125,43 @@ public class Colonia {
         iF = local.getTour()[tamañoProblema - 1];
         jF = local.getTour()[0];
         
-        feromona[iF][jF] = nuevaFeromona;
-        feromona[jF][iF] = nuevaFeromona;
-        for (int i=0;i<tamañoProblema -1; i++)
+        feromona[iF][jF] += nuevaFeromona;
+        feromona[jF][iF] += nuevaFeromona;
+        //for (int i=0;i<tamañoProblema -1; i++)
         {
-            int iM= mejor.getTour()[i];
-            int jM= mejor.getTour()[i+1];
+            int iM;
+            int jM;
             
             for (int j = 0; j < tamañoProblema - 1; j++) 
             {
-                iF = local.getTour()[j];
-                jF = local.getTour()[j + 1];
-                if (iF==iM && jF==jM)
+                //iF = local.getTour()[j];
+                iM=mejor.getTour()[j];
+                //jF = local.getTour()[j + 1];
+                jM=mejor.getTour()[j+1];
+                //if (iF==iM && jF==jM)
                 {
                     nuevaFeromona=1d/mejor.getAptitud();
-                    feromona[iF][jF] = nuevaFeromona;
-                    feromona[jF][iF] = nuevaFeromona;
+                    feromona[iM][jM] += nuevaFeromona;
+                    feromona[jM][iM] += nuevaFeromona;
                 }
 
 
             }
-            
-            iF = local.getTour()[tamañoProblema-1];
-            jF = local.getTour()[0];
-                if (iF==iM && jF==jM)
+                iM=mejor.getTour()[47];
+                //jF = local.getTour()[j + 1];
+                jM=mejor.getTour()[0];
+                //if (iF==iM && jF==jM)
                 {
+                    nuevaFeromona=1d/mejor.getAptitud();
+                    feromona[iM][jM] += nuevaFeromona;
+                    feromona[jM][iM] += nuevaFeromona;
+                }
+            
+            
                     nuevaFeromona=1d/mejor.getAptitud();
                     feromona[iF][jF] = nuevaFeromona;
                     feromona[jF][iF] = nuevaFeromona;
-                }
+                
         }
 
             
