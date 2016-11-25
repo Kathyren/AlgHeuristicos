@@ -10,7 +10,7 @@ package tsp;
  * @author Carlos Antonio
  */
 public class Particle {
-    private int[] pBest;
+   private int[] pBest;
     private int[] path;
     private double aptitud;
     private double[] velocidad;
@@ -18,7 +18,17 @@ public class Particle {
     //constructor de la particula
     public void Particle(){ 
         path = new int[cd];
+        for (int i = 0; i < cd ; i++) {
+            path[i] = -1;
+        }        
         pBest = new int[cd];
+        velocidad = new double[cd];
+        aptitud = 0;        
+    }
+    public void Particle(Capitals cap){ 
+        path = new int[cd];
+        path = cap.Revolver();
+        pBest = path.clone();
         velocidad = new double[cd];
         aptitud = 0;        
     }
