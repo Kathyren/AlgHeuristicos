@@ -77,7 +77,7 @@ public class Particle {
 
         for (int i = 0; i < A.length ; i++ ) {
                     
-            if (A[i] == B[j]) {
+            if (A[i] == B[i]) {
                 agrega = true;
             }
             else{
@@ -125,10 +125,10 @@ public class Particle {
      * @param gBest 
      */
     public void cambiarRutas(double k1, double k2, double k3, int[] gBest){
-        
+        int[] nuevaRuta = new int[N_CIUDADES];
         for(int i=0; i < path.length; i++){
             double r = Math.random();
-            int[] nuevaRuta = new int[N_CIUDADES];
+            
             boolean elegido = false;
             if(r < k3){
                 if(!contains(nuevaRuta, gBest[i])){
@@ -144,14 +144,8 @@ public class Particle {
             }
             if(!elegido){
                 int j = i;
-                int c = path[j];
-                while(contains(nuevaRuta, c)){
-                    c = path[j];
-                    j++;
-                    if(j == path.length)
-                        j=0;
-                }
-                nuevaRuta[i] = c;
+                int b= nuevaRuta[i-1];
+                
             }
         }
         return;

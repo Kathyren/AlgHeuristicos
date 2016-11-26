@@ -11,7 +11,7 @@ package tsp;
  * @author Daniel
  */
 public final class Constants {
-    public static final int N_CIUDADES = 10;
+    public static final int N_CIUDADES = 4;
     public static final int C1min=0;
     public static final double C1max=.50;
     public static final double C2min=.10;
