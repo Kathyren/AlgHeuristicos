@@ -174,18 +174,13 @@ public class Particle {
      * @param gBest 
      */
     public void cambiarRutas(double k1, double k2, double k3, int[] gBest){
-<<<<<<< HEAD
-        for(int i=0; i < path.length; i++){
-            double r = Math.random()/100;
-            int[] nuevaRuta = new int[cd];
-=======
-        int[] nuevaRuta = new int[N_CIUDADES];
+        
+        int[] nuevaRuta = new int[cd];
         for (int j = 0; j < N_CIUDADES; j++){
             nuevaRuta[j] = -1;
         }
         for(int i=0; i < path.length; i++){
             double r = Math.random();
->>>>>>> dc6548c451cde61a7c4bd396e6c4e20d8857653d
             boolean elegido = false;
             if(r < k3){
                 if(!contains(nuevaRuta, gBest[i])){
