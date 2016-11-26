@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package tsp;
+import java.awt.Graphics;
+import java.lang.*;
+import javax.swing.JPanel;
 import static tsp.Constants.N_CIUDADES;
 import static tsp.Constants.C1min;
       import static tsp.Constants.C1max;
@@ -40,19 +43,21 @@ public class Swarm {
         }
         CalcularDistancias(datos);
     }
-    public String Ejecutar()
+    public String Ejecutar(JPanel panel)
     {
+        Graphics gr = panel.getGraphics();
+        DrawCities dc = new DrawCities(gr,panel);
         for (int i=0; i<IterMax;i++)
         {
-            Generación();
+            Generación(dc);
             iter=i;
-            
+            panel.update(gr);
         }
        // return escribirSolucion();
        return String.valueOf( apGBest)+" /n "+ escribirSolucion();
         
     }
-    public void Generación()
+    public void Generación(DrawCities dc)
     {
         double aptAnt = 0; 
         for (int i=0; i<N_CIUDADES; i++)
@@ -70,8 +75,9 @@ public class Swarm {
         }
         actualizar();
         for (int i=0; i<N_CIUDADES; i++){
-            particulas[i].cambiarRutas(w,c1,c2,gBest);
+            //particulas[i].cambiarRutas(w,c1,c2,gBest);
         }
+        dc.draw(gBest);
     }
     public void actualizar()
     {
