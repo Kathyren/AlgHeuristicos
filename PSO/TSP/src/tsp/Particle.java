@@ -202,4 +202,18 @@ public class Particle {
         C[A.length-1][1] = A[0];
         return C;
     }
+    
+    public void position_updating(){
+        double a = Math.random();
+        for (int j = 0; j < cd; j++) {
+            double prob = velocidad[0][j];
+            if (prob > a) {
+                velocidad[0][j] = 0;
+            }
+        }
+        int[] New_X = new int[path.length];
+        for (int j = 0; j < cd; j++) {
+            
+        }
+    }
 }
