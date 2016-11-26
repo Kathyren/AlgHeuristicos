@@ -13,26 +13,39 @@ public class Particle {
    private int[] pBest;
     private int[] path;
     private double aptitud;
-    private double[] velocidad;
+    private double[][] velocidad;
     private int cd = 48;
     //constructor de la particula
-    public  Particle(){ 
+    public void Particle(){ 
         path = new int[cd];
         for (int i = 0; i < cd ; i++) {
             path[i] = -1;
         }        
         pBest = new int[cd];
-        velocidad = new double[cd];
+        velocidad = probabilidades();
         aptitud = 999999;        
     }
-    public  Particle(Capitals cap){ 
+    public void Particle(Capitals cap){ 
         path = new int[cd];
         path = cap.Revolver();
         pBest = path.clone();
-        velocidad = new double[cd];
-        aptitud = 9999999;        
+        velocidad = probabilidades();
+        aptitud = 999999;        
+    }    
+
+    //inicializar la velociadades en random 
+    public double[][] probabilidades(){
+        double[][] par = new double[cd][cd];
+        for (int i = 0; i<cd ; i++ ) {
+            for (int j = 0; j<cd ; j++ ) {
+                par[i][j] = Math.random();
+            }
+        }
+        return par;
     }
-    //public void Particle(){ }
+    public int[] multi(int c, int [] A){ //en construccion
+        return new int [cd];
+    }
     public double calcAptitud(double[][] dat){ 
         aptitud = 0;
         for(int i = 0; i < path.length-1; i++){
@@ -41,9 +54,34 @@ public class Particle {
         aptitud+= dat[path[47]][path[0]];
         return aptitud;
     }
+    //PBest - X || gBest - X
+    public int[] resta(int [] A, int [] B){ //Aquellos que están en A pero no están en B
+        
+        int [] C = new int[cd];
+        boolean agrega = false;
+
+        for (int i = 0; i < A.length ; i++ ) {
+            for (int j = 0; j < B.length ; j++ ) {            
+                if (A[i] != B[j]) {
+                    agrega = true;
+                }
+                else{
+                    agrega = false;
+                    break;
+                }
+            }
+            if (agrega) {
+                C[i] = A[i];
+            }        
+        }
+        return C;
+    }
+
     public void calcVelocidad(double w, double c1, double c2, int[] gBest){ 
-        for (int i = 0; i < cd ; i++) {
-            velocidad[i] = w*velocidad[i] + c1 * Math.random()*(pBest[i]-path[i])+c2*Math.random()*(gBest[i]-path[i]);
+        for (int j = 0; j < cd ; j++) {
+            for ( int i = 0; i < cd; i ++) {
+                //calcular cada velocidad[j][i]
+            }
         }        
     }
     public int[] getPbest(){
@@ -94,8 +132,7 @@ public class Particle {
             }
         }
         return;
-    }
-    
+    } 
     public boolean contains(int[] arr, int v){
         for(int i=0;i<arr.length;i++){
             if(arr[i] == v){
