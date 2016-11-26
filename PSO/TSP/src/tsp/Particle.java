@@ -13,15 +13,12 @@ public class Particle {
    private int[] pBest;
     private int[] path;
     private double aptitud;
-<<<<<<< HEAD
-    private double[] velocidad;
-    private int cd = N_CIUDADES;
-=======
+
     private double[][] velocidad;
-    private int cd = 48;
->>>>>>> 265bf5be6b93f2967b8256d760d36040b59af100
+    private int cd = N_CIUDADES;
+
     //constructor de la particula
-    public void Particle(){ 
+    public  Particle(){ 
         path = new int[cd];
         for (int i = 0; i < cd ; i++) {
             path[i] = -1;
@@ -30,7 +27,7 @@ public class Particle {
         velocidad = probabilidades();
         aptitud = 999999;        
     }
-    public void Particle(Capitals cap){ 
+    public  Particle(Capitals cap){ 
         path = new int[cd];
         path = cap.Revolver();
         pBest = path.clone();
