@@ -108,11 +108,16 @@ DefaultListModel<String> model = new DefaultListModel<>();
         */
         Graphics gr = jPanel2.getGraphics();
         jPanel2.update(gr);
+<<<<<<< HEAD
         DrawCities dc = new DrawCities(gr);
         Swarm banco = new Swarm();
         String s= banco.Ejecutar(dc);
         int[] ciudades = banco.getMejor();
         dc.draw(ciudades);
+=======
+        Swarm banco = new Swarm();
+        String s= banco.Ejecutar(jPanel2);
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
         //banco.Ejecutar();
         model.addElement( "\n  Aptitud: " + s + "\n");
         lbl_r.setModel(model);

@@ -5,6 +5,11 @@
  */
 package tsp;
 import java.awt.Graphics;
+<<<<<<< HEAD
+=======
+import java.lang.*;
+import javax.swing.JPanel;
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
 import static tsp.Constants.N_CIUDADES;
 import static tsp.Constants.C1min;
 import static tsp.Constants.C1max;
@@ -42,18 +47,37 @@ public class Swarm {
         }
         CalcularDistancias(datos);
     }
+<<<<<<< HEAD
     public String Ejecutar(DrawCities dc)
+=======
+    public String Ejecutar(JPanel panel)
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
     {
+        Graphics gr = panel.getGraphics();
+        DrawCities dc = new DrawCities(gr,panel);
         for (int i=0; i<IterMax;i++)
         {
             Generación(dc);
             iter=i;
+<<<<<<< HEAD
+=======
+            panel.update(gr);
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
         }
        // return escribirSolucion();
        return String.valueOf( apGBest)+"\n"+ escribirSolucion();
         
     }
+<<<<<<< HEAD
     public void definirMejores(DrawCities dc){
+=======
+<<<<<<< HEAD
+    public void Generación(DrawCities dc)
+    {
+=======
+    public void definirMejores(){
+>>>>>>> b35b4cc78471e7b463d4125aed28ef657edd8f9d
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
         double aptAnt = 0; 
         for (int i=0; i<N_PARTICLES; i++)
         {
@@ -70,6 +94,7 @@ public class Swarm {
             }
         }
     }
+<<<<<<< HEAD
     public void Generación(DrawCities dt){
         definirMejores(dt);
         //actualizar();
@@ -77,6 +102,20 @@ public class Swarm {
             particulas[i].cambiarRutas(C1min,C2min,C3min,gBest);
         }
         definirMejores(dt);
+=======
+    public void Generación(){
+        definirMejores();
+        actualizar();
+<<<<<<< HEAD
+        for (int i=0; i<N_CIUDADES; i++){
+            //particulas[i].cambiarRutas(w,c1,c2,gBest);
+=======
+        for (int i=0; i<N_PARTICLES; i++){
+            particulas[i].cambiarRutas(w,c1,c2,gBest);
+>>>>>>> b35b4cc78471e7b463d4125aed28ef657edd8f9d
+        }
+        dc.draw(gBest);
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
     }
     public void actualizar()
     {
