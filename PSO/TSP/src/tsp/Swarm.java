@@ -20,11 +20,12 @@ import static tsp.Constants.IterMax;
 public class Swarm {
     int[] gBest;//Arreglo del mejor camino 
     double apGBest;//aptitud del mejor camino de todos los tiempos
-    int c1,c2,iter;//factores de cambio
+    double c1,c2;
+    int iter;//factores de cambio
     double k;
     double wMin,wMax,w;//factor de inhercia
     Particle[] particulas;
-     private double[][] datos= new double[48][48];
+     private double[][] datos= new double[N_CIUDADES][N_CIUDADES];
     
     
     
@@ -48,7 +49,7 @@ public class Swarm {
             
         }
        // return escribirSolucion();
-       return String.valueOf( apGBest);
+       return String.valueOf( apGBest)+" /n "+ escribirSolucion();
         
     }
     public void Generación()
@@ -76,14 +77,14 @@ public class Swarm {
     {
         c1= (C1min-C1max)/IterMax*iter+C1max;
         c2= (C2max-C2min)/IterMax*iter+C2min;
-        w= (wMin-wMax)/(IterMax-1)*iter-1+wMax;
-        int o= c1+c2;
-        k= 2 / Math.abs(2-o-Math.pow(Math.pow(o^2-4*o,2),0.5));
+        w= (wMin-wMax)/(IterMax-1)*(iter-1)+wMax;
+        double o= c1+c2;
+        k= 2 / Math.abs(2-o-Math.pow(Math.pow(Math.pow(o,2)-4*o,2),0.5));
     }
     public static void CalcularDistancias(double [][] dat){
         Capitals capi = new Capitals();
-        for (int i = 0; i < 48; i++) {
-            for (int j = 0; j < 48; j++) {
+        for (int i = 0; i < N_CIUDADES; i++) {
+            for (int j = 0; j < N_CIUDADES; j++) {
                 if(i != j)
                     dat[i][j]= distacia(i,j,capi);
             }
@@ -97,6 +98,7 @@ public class Swarm {
         String R="";
         for (int i=0; i<N_CIUDADES; i++)
         {
+            R+= String.valueOf(gBest[i])+" - ";
             
         }
         return R;

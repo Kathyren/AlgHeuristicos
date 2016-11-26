@@ -11,14 +11,15 @@ package tsp;
  */
 import java.util.Collections;
 import java.util.Arrays;
-
+import static tsp.Constants.N_CIUDADES;
 public class Capitals {
     
-    Capital [] c = new Capital[48];
-    int n [] = new int[48];
+    Capital [] c = new Capital[N_CIUDADES];
+    int n [] = new int[N_CIUDADES];
     int optimo [] = {1,8,38,31,44,18,7,28,6,37,19,27,17,43,30,36,46,33,20,47,21,32,39,48,5,42,24,10,45,35,4,26,2,29,34,41,16,22,3,23,14,25,13,11,12,15,40,9};
     
     public Capitals(){
+        try{
         c[0] = new Capital(0,6734,1453);
         c[1] = new Capital(1,2233,10);
         c[2] = new Capital(2,5530,1424);
@@ -67,6 +68,9 @@ public class Capitals {
         c[45] = new Capital(45,6807,2993);
         c[46] = new Capital(46,5185,3258);
         c[47] = new Capital(47,3023,1942);
+        }
+        catch(Exception e)
+        {}
         
     }
     public int[] Optimo(){

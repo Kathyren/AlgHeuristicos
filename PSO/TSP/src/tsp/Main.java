@@ -103,8 +103,9 @@ DefaultListModel<String> model = new DefaultListModel<>();
         */
         
         Swarm banco = new Swarm();
+        String s= banco.Ejecutar();
         //banco.Ejecutar();
-        model.addElement( "\n  Aptitud: " + banco.Ejecutar() + "\n");
+        model.addElement( "\n  Aptitud: " + s + "\n");
         lbl_r.setModel(model);
     }//GEN-LAST:event_jButton2ActionPerformed
 

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package tsp;
-
+import static tsp.Constants.N_CIUDADES;
 /**
  *
  * @author Carlos Antonio
@@ -14,7 +14,7 @@ public class Particle {
     private int[] path;
     private double aptitud;
     private double[] velocidad;
-    private int cd = 48;
+    private int cd = N_CIUDADES;
     //constructor de la particula
     public  Particle(){ 
         path = new int[cd];
@@ -38,7 +38,7 @@ public class Particle {
         for(int i = 0; i < path.length-1; i++){
             aptitud+= dat[path[i]][path[i+1]];
         }
-        aptitud+= dat[path[47]][path[0]];
+        aptitud+= dat[path[N_CIUDADES-1]][path[0]];
         return aptitud;
     }
     public void calcVelocidad(double w, double c1, double c2, int[] gBest){ 
@@ -65,9 +65,10 @@ public class Particle {
      * @param gBest 
      */
     public void cambiarRutas(double k1, double k2, double k3, int[] gBest){
+        
         for(int i=0; i < path.length; i++){
-            double r = Math.random()/100;
-            int[] nuevaRuta = new int[48];
+            double r = Math.random();
+            int[] nuevaRuta = new int[N_CIUDADES];
             boolean elegido = false;
             if(r < k3){
                 if(!contains(nuevaRuta, gBest[i])){
