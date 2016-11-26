@@ -70,22 +70,20 @@ public class Particle {
         return aptitud;
     }
     //PBest - X || gBest - X
-    public int[] resta(int [] A, int [] B){ //Aquellos que están en A pero no están en B
+    public int[] resta(int [] A, int [] B){ //Aquellos que están en A pero no están en B; !!! Misma posicion!
         
         int [] C = new int[cd];
         boolean agrega = false;
 
         for (int i = 0; i < A.length ; i++ ) {
-            for (int j = 0; j < B.length ; j++ ) {            
-                if (A[i] != B[j]) {
-                    agrega = true;
-                }
-                else{
-                    agrega = false;
-                    break;
-                }
+                    
+            if (A[i] == B[j]) {
+                agrega = true;
             }
-            if (agrega) {
+            else{
+                agrega = false;                
+            }            
+            if (!agrega) {
                 C[i] = A[i];
             }        
         }
