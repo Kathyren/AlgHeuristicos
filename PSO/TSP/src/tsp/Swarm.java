@@ -9,11 +9,14 @@ import java.lang.*;
 import javax.swing.JPanel;
 import static tsp.Constants.N_CIUDADES;
 import static tsp.Constants.C1min;
-      import static tsp.Constants.C1max;
-      import static tsp.Constants.C2min;
-      import static tsp.Constants.C2max;
-      import static tsp.Constants.Kmin;
-      import static tsp.Constants.Kmax;
+import static tsp.Constants.C1max;
+import static tsp.Constants.C2min;
+import static tsp.Constants.C2max;
+import static tsp.Constants.C3min;
+import static tsp.Constants.C3max;
+import static tsp.Constants.N_PARTICLES;
+import static tsp.Constants.Kmin;
+import static tsp.Constants.Kmax;
 import static tsp.Constants.IterMax;
 
 /**
@@ -23,7 +26,7 @@ import static tsp.Constants.IterMax;
 public class Swarm {
     int[] gBest;//Arreglo del mejor camino 
     double apGBest;//aptitud del mejor camino de todos los tiempos
-    double c1,c2;
+    double c1,c2,c3;
     int iter;//factores de cambio
     double k;
     double wMin,wMax,w;//factor de inhercia
@@ -34,10 +37,8 @@ public class Swarm {
     
     public Swarm(){
         apGBest = 999999;
-        c1 = C1max;
-        c2 = C2min;
-        particulas = new Particle[N_CIUDADES];
-        for (int i=0; i<N_CIUDADES; i++)
+        particulas = new Particle[N_PARTICLES];
+        for (int i=0; i<N_PARTICLES; i++)
         {
             particulas[i]= new Particle(new Capitals());
         }
@@ -54,13 +55,17 @@ public class Swarm {
             panel.update(gr);
         }
        // return escribirSolucion();
-       return String.valueOf( apGBest)+" /n "+ escribirSolucion();
+       return String.valueOf( apGBest)+"\n"+ escribirSolucion();
         
     }
+<<<<<<< HEAD
     public void Generación(DrawCities dc)
     {
+=======
+    public void definirMejores(){
+>>>>>>> b35b4cc78471e7b463d4125aed28ef657edd8f9d
         double aptAnt = 0; 
-        for (int i=0; i<N_CIUDADES; i++)
+        for (int i=0; i<N_PARTICLES; i++)
         {
             aptAnt = particulas[i].getAptitud();
             particulas[i].calcAptitud(datos);
@@ -73,17 +78,30 @@ public class Swarm {
                 apGBest=particulas[i].getAptitud();
             }
         }
+    }
+    public void Generación(){
+        definirMejores();
         actualizar();
+<<<<<<< HEAD
         for (int i=0; i<N_CIUDADES; i++){
             //particulas[i].cambiarRutas(w,c1,c2,gBest);
+=======
+        for (int i=0; i<N_PARTICLES; i++){
+            particulas[i].cambiarRutas(w,c1,c2,gBest);
+>>>>>>> b35b4cc78471e7b463d4125aed28ef657edd8f9d
         }
         dc.draw(gBest);
     }
     public void actualizar()
     {
+        /* 
+        w= (wMin-wMax)/(IterMax-1)*(iter-1)+wMax;
         c1= (C1min-C1max)/IterMax*iter+C1max;
         c2= (C2max-C2min)/IterMax*iter+C2min;
-        w= (wMin-wMax)/(IterMax-1)*(iter-1)+wMax;
+        */
+        c1= (C1min-C1max)/IterMax*iter+C1max;
+        c2= (C2min-C2max)/IterMax*iter+C2max;
+        c3= (C3min-C3max)/IterMax*iter+C3max;
         double o= c1+c2;
         k= 2 / Math.abs(2-o-Math.pow(Math.pow(Math.pow(o,2)-4*o,2),0.5));
     }
