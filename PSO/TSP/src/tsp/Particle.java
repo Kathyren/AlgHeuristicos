@@ -43,8 +43,9 @@ public class Particle {
         }
         return par;
     }
-    public int[] multi(int c, int [] A){ //en construccion
-        return new int [cd];
+    
+    public int[] multi(int c, int[] A){
+        return new int[48];
     }
 
     public double[][] WxVelocidades(double w){
@@ -89,13 +90,22 @@ public class Particle {
         return C;
     }
 
+    // Aun no completo
     public void calcVelocidad(double w, double c1, double c2, int[] gBest){ 
+        
+        double[][] WxP = WxVelocidades(w);
         for (int j = 0; j < cd ; j++) {
-            for ( int i = 0; i < cd; i ++) {
-                //calcular cada velocidad[j][i]
+            for ( int i = 0; i < cd; i ++) {              
+                double r =   Math.random();
+                double r2 = Math.random();
+                double c = c1 * r;
+                double C2 = c2 * r2;
+                //Fórmula, pero no es suma, es ver cual suma es mayor y asignarla a velocidad[j][i]
+                //velocidad[j][i] = WxP[j][i] + multi(c, resta(pBest[j], path[j])) + multi(c2, resta(gBest[j], path[j]));
             }
         }        
     }
+    
     public int[] getPbest(){
         return pBest;
     }
