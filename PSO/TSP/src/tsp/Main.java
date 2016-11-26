@@ -108,9 +108,9 @@ DefaultListModel<String> model = new DefaultListModel<>();
         */
         Graphics gr = jPanel2.getGraphics();
         jPanel2.update(gr);
-        Swarm banco = new Swarm();
-        String s= banco.Ejecutar();
         DrawCities dc = new DrawCities(gr);
+        Swarm banco = new Swarm();
+        String s= banco.Ejecutar(dc);
         int[] ciudades = banco.getMejor();
         dc.draw(ciudades);
         //banco.Ejecutar();

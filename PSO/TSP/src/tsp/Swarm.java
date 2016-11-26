@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package tsp;
+import java.awt.Graphics;
 import static tsp.Constants.N_CIUDADES;
 import static tsp.Constants.C1min;
 import static tsp.Constants.C1max;
@@ -41,19 +42,18 @@ public class Swarm {
         }
         CalcularDistancias(datos);
     }
-    public String Ejecutar()
+    public String Ejecutar(DrawCities dc)
     {
         for (int i=0; i<IterMax;i++)
         {
-            Generación();
+            Generación(dc);
             iter=i;
-            
         }
        // return escribirSolucion();
        return String.valueOf( apGBest)+"\n"+ escribirSolucion();
         
     }
-    public void definirMejores(){
+    public void definirMejores(DrawCities dc){
         double aptAnt = 0; 
         for (int i=0; i<N_PARTICLES; i++)
         {
@@ -66,15 +66,17 @@ public class Swarm {
             {
                 gBest=particulas[i].getPath();
                 apGBest=particulas[i].getAptitud();
+                //dc.draw(particulas[i].getPath());
             }
         }
     }
-    public void Generación(){
-        definirMejores();
-        actualizar();
+    public void Generación(DrawCities dt){
+        definirMejores(dt);
+        //actualizar();
         for (int i=0; i<N_PARTICLES; i++){
-            particulas[i].cambiarRutas(w,c1,c2,gBest);
+            particulas[i].cambiarRutas(C1min,C2min,C3min,gBest);
         }
+        definirMejores(dt);
     }
     public void actualizar()
     {
