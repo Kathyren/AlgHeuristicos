@@ -46,6 +46,18 @@ public class Particle {
     public int[] multi(int c, int [] A){ //en construccion
         return new int [cd];
     }
+
+    public double[][] WxVelocidades(double w){
+        
+        double[][] A = new double[48][48];
+        for (int i = 0; i < cd; i++) {
+            for (int j = 0; j < cd; j++) {
+                A[i][j] = velocidad[i][j] * w;
+            }
+        }        
+        return A;
+    }
+
     public double calcAptitud(double[][] dat){ 
         aptitud = 0;
         for(int i = 0; i < path.length-1; i++){
