@@ -6,6 +6,7 @@
 package tsp;
 
 import javax.swing.DefaultListModel;
+import java.awt.Graphics;
 
 /**
  *
@@ -64,11 +65,15 @@ DefaultListModel<String> model = new DefaultListModel<>();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -101,9 +106,13 @@ DefaultListModel<String> model = new DefaultListModel<>();
         model.clear();
         insertarLista(Ciudades(a));
         */
-        
+        Graphics gr = jPanel2.getGraphics();
+        jPanel2.update(gr);
         Swarm banco = new Swarm();
         String s= banco.Ejecutar();
+        DrawCities dc = new DrawCities(gr);
+        int[] ciudades = banco.getMejor();
+        dc.draw(ciudades);
         //banco.Ejecutar();
         model.addElement( "\n  Aptitud: " + s + "\n");
         lbl_r.setModel(model);

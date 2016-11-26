@@ -103,6 +103,8 @@ public class Swarm {
         }
         return R;
     }
-    
+    public int[] getMejor(){
+        return gBest;
+    }
     
 }
