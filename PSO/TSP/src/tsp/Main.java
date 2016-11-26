@@ -6,6 +6,7 @@
 package tsp;
 
 import javax.swing.DefaultListModel;
+import java.awt.Graphics;
 
 /**
  *
@@ -64,11 +65,15 @@ DefaultListModel<String> model = new DefaultListModel<>();
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 926, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -77,10 +82,10 @@ DefaultListModel<String> model = new DefaultListModel<>();
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton2)
-                .addGap(50, 50, 50))
+                .addGap(23, 23, 23))
         );
 
         pack();
@@ -101,9 +106,18 @@ DefaultListModel<String> model = new DefaultListModel<>();
         model.clear();
         insertarLista(Ciudades(a));
         */
-        
+        Graphics gr = jPanel2.getGraphics();
+        jPanel2.update(gr);
+<<<<<<< HEAD
+        DrawCities dc = new DrawCities(gr);
         Swarm banco = new Swarm();
-        String s= banco.Ejecutar();
+        String s= banco.Ejecutar(dc);
+        int[] ciudades = banco.getMejor();
+        dc.draw(ciudades);
+=======
+        Swarm banco = new Swarm();
+        String s= banco.Ejecutar(jPanel2);
+>>>>>>> 1720dd469aabd841ee2ffe152ef8f12d4098a1bf
         //banco.Ejecutar();
         model.addElement( "\n  Aptitud: " + s + "\n");
         lbl_r.setModel(model);
