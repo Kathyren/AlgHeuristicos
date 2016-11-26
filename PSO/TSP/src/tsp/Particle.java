@@ -77,7 +77,7 @@ public class Particle {
 
         for (int i = 0; i < A.length ; i++ ) {
                     
-            if (A[i] == B[j]) {
+            if (A[i] == B[i]) {
                 agrega = true;
             }
             else{
