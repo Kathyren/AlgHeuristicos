@@ -29,7 +29,7 @@ for (k0:M)
 		.copia
 for
 	aritsas[mejor.camino[i]][mejor.camino[i+1]].feromonas += d/mejor.apitidu;   <- deposito de feromonas de acuerdo a la mejor solucion.
-	aquellas aristas donde paso la mejor solucion. La cantidad es d una constante entre la aptitud de todas la solucion
+	aquellas aristas donde paso la mejor solucion. La cantidad es de una constante entre la aptitud de todas la solucion
 aristas[mejor.camino[N-1]][mejor.camino[0][mejor.camino[N-1]].feromonas +d/mejor.aptidud  <-del utlimoa al primero
 for
 	for
@@ -48,7 +48,7 @@ solo se agrega feromonas en las arists del tour
 -----------------------------------------------------------------
 for 
 	for
-		sumProb+= math.ow(TSP_ACO.aristas[i][j].feromonas, TSO_ACO.alfa) * math,pow(1/TSP_ACO.aristas[i][j].distancia, TSP_ACO.beta)
+		sumProb+= math.ow(TSP_ACO.aristas[i][j].feromonas, TSO_ACO.alfa) * math.pow(1/TSP_ACO.aristas[i][j].distancia, TSP_ACO.beta)
 
 i es la ciudad donde ya esaos y j son las candidatas
 

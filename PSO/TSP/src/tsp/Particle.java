@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 package tsp;
+import java.util.ArrayList;
+import java.util.List;
 import static tsp.Constants.N_CIUDADES;
 /**
  *
@@ -205,15 +207,82 @@ public class Particle {
     
     public void position_updating(){
         double a = Math.random();
-        for (int j = 0; j < cd; j++) {
-            double prob = velocidad[0][j];
-            if (prob > a) {
-                velocidad[0][j] = 0;
-            }
-        }
         int[] New_X = new int[path.length];
-        for (int j = 0; j < cd; j++) {
+        int indx=0;
+        ArrayList<Double[]> cutV=new  ArrayList<>();
+        //int [] cutV= new int[cd];
+        //ArrayList<Integer> cutV=new  ArrayList<Integer>();
+
+        for (int i=0; i<cd; i++)
+            for (int j = 0; j < cd; j++)
+            {
+                if (velocidad[i][j]>a)
+                {
+                    Double[] x = {Double.valueOf(i),Double.valueOf(j), velocidad[i][j]};
+                    cutV.add(x);
+                }
+            }
+        
+        
+        /*for (int i= 0; i<cd;i++)
+        {
+            int x= Integer.valueOf(cutV.get(i)[0].toString());
+            int y=0;
+            int[] opc;
+            if (!contains(New_X, x))
+            {
+                do 
+                {
+                    int idx=0;
+                    opc = MejorAristaCon(cutV, x,idx);
+                    cutV.remove(idx);
+                    if (x==opc[0])
+                        y=opc[1];
+                    else
+                        y=opc[0];     
+                }while (!(!contains(New_X, y)||opc==null));
+                if (!contains(New_X, y))
+                    New_X[indx]=x;
+                    New_X[indx+1]=y;
+                    indx+=2;
+                
+            }
+            
+        }*/
+    }
+    public int[] MejorAristaCon(ArrayList<Double[]> candidatos, int ciudad, int idx)
+    {
+        int [] mejor = new int[2];
+        int prob=0;
+        for (int i=0; i<candidatos.size();i++)
+        {
+            if (candidatos.get(i)[0].intValue()==ciudad ||candidatos.get(i)[1].intValue()==ciudad)
+            
+                if (candidatos.get(i)[2].floatValue()>prob)
+                {
+                    mejor[0]=candidatos.get(i)[0].intValue();
+                    mejor[1]=candidatos.get(i)[1].intValue();
+                    idx=i;
+                }
             
         }
+        return  mejor;
+    }
+    public int[] MejorAristaCon(double[][] candidatos, int ciudad)
+    {
+        int [] mejor = new int[2];
+        int prob=0;
+        for (int i=0; i<candidatos.length;i++)
+        {
+            if ((int)candidatos[i][0]==ciudad ||(int)candidatos[i][1]==ciudad)
+            
+                if (candidatos[i][2]>prob)
+                {
+                    mejor[0]=(int)candidatos[i][0];
+                    mejor[1]=(int)candidatos[i][1];
+            
+        }
+        return  mejor;
+    }
     }
 }
