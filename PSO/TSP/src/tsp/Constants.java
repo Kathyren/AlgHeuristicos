@@ -20,7 +20,7 @@ public final class Constants {/*
     public static final double Kmax=.90;
     public static final int IterMax=10;*/
     
-    public static final int N_CIUDADES = 48;
+    public static final int N_CIUDADES = 6;
     public static final int N_PARTICLES = 10;
     public static final double C1min=0;
     public static final double C2min=.10;

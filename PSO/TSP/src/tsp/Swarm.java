@@ -74,6 +74,8 @@ public class Swarm {
         actualizar();
         for (int i=0; i<N_PARTICLES; i++){
             particulas[i].cambiarRutas(w,c1,c2,gBest);
+            particulas[i].calcVelocidad(w, c1, c2, gBest);
+            particulas[i].position_updating();
         }
     }
     public void actualizar()

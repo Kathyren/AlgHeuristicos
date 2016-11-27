@@ -59,7 +59,7 @@ public class Particle {
     public double[][] multi(double[] c, int[][] A){
 
         double [][] CxR = mEnCeros();
-
+//double [][] CxR = new double[cd][3];
         for (int i=0; i<cd ; i++) {
             int x = A[i][0];// aqui tendria el valor del primer elemento en la reesta
             int y = A[i][1];
@@ -128,9 +128,9 @@ public class Particle {
         for (int j = 0; j < cd ; j++)
         {
              double r =   Math.random();
-                double r2 = Math.random();
-                C1[j] = c1 * r;
-                C2[j] = c2 * r2;
+            double r2 = Math.random();
+            C1[j] = c1 * r;
+            C2[j] = c2 * r2;
         }
         double[][] r = mEnCeros();
         int[][] res = resta(pBest, path);
@@ -143,18 +143,21 @@ public class Particle {
                 
                 //Fórmula, pero no es suma, es ver cual suma es mayor y asignarla a velocidad[j][i]
                 //velocidad[j][i] = WxP[j][i] + multi(c, resta(pBest[j], path[j])) + multi(c2, resta(gBest[j], path[j]));
-                if (WxP[j][i] > mult[j][i]) {
-                    r[j][i] = WxP[j][i];
-                }
-                else
-                    r[j][i] = mult[j][i];
-                
+                if (j != i){
+                    if (WxP[j][i] > mult[j][i]) {
+                        r[j][i] = WxP[j][i];
+                    }
+                    else
+                        r[j][i] = mult[j][i];
 
-                if (mult2[j][i] > r[j][i]) {
-                    r[j][i] = mult2[j][i];
-                }                
+
+                    if (mult2[j][i] > r[j][i]) {
+                        r[j][i] = mult2[j][i];
+                    }       
+                }
             }
-        }        
+        }
+        velocidad = r;
     }
     
     public int[] getPbest(){
@@ -209,6 +212,7 @@ public class Particle {
         double a = Math.random();
         int[] New_X = new int[path.length];
         int indx=0;
+        int idxCut = 0;
         ArrayList<Double[]> cutV=new  ArrayList<>();
         //int [] cutV= new int[cd];
         //ArrayList<Integer> cutV=new  ArrayList<Integer>();
@@ -223,6 +227,27 @@ public class Particle {
                 }
             }
         
+        for (int j = 0; j < cd; j++) {
+            int i = 0;
+            int y=0;
+            int ciudad = cutV.get(j)[0].intValue();
+            int []arc;
+            
+            while (i < cd-1 && cutV.size()>0) {
+                if (!contains(New_X, ciudad)) {
+                    arc = MejorAristaCon(cutV,ciudad,idxCut);
+                    if (ciudad==arc[0])
+                        y=arc[1];
+                    else
+                        y=arc[0];  
+                    New_X[i] =ciudad;
+                    New_X[i+1] =y;
+                    cutV.remove(idxCut);
+                    i++;
+                }
+                
+            }
+        }
         
         /*for (int i= 0; i<cd;i++)
         {
@@ -281,8 +306,8 @@ public class Particle {
                     mejor[0]=(int)candidatos[i][0];
                     mejor[1]=(int)candidatos[i][1];
             
+                }        
         }
         return  mejor;
-    }
     }
 }
