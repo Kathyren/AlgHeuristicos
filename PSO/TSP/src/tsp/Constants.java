@@ -20,18 +20,18 @@ public final class Constants {/*
     public static final double Kmax=.90;
     public static final int IterMax=10;*/
     
-    public static final int N_CIUDADES = 6;
-    public static final int N_PARTICLES = 10;
-    public static final double C1min=0;
-    public static final double C2min=.10;
-    public static final double C3min=.90;
+    public static final int N_CIUDADES = 48;
+    public static final int N_PARTICLES = 200;
+    public static final double wMin=0.5;
+    public static final double C2min=2;
+    public static final double C3min=2;
     
-    public static final double C1max=.50;
-    public static final double C2max=.30;
-    public static final double C3max=.20;
+    public static final double wMax=.5;
+    public static final double C2max=2;
+    public static final double C3max=2;
     
     public static final double Kmin=.20;
     public static final double Kmax=.90;
-    public static final int IterMax=1000;
+    public static final int IterMax=100;
     
 }

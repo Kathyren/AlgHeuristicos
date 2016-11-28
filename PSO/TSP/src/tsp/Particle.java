@@ -4,8 +4,12 @@
  * and open the template in the editor.
  */
 package tsp;
+import static java.lang.Math.max;
+import static java.lang.Math.max;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import static tsp.Constants.N_CIUDADES;
 /**
  *
@@ -15,8 +19,10 @@ public class Particle {
    private int[] pBest;
     private int[] path;
     private double aptitud;
+    public double mejorAptitud;
     private double[][] velocidad;
     private int cd = N_CIUDADES;
+    double[][] distancias;
     //constructor de la particula
     public  Particle(){ 
         path = new int[cd];
@@ -25,14 +31,17 @@ public class Particle {
         }        
         pBest = new int[cd];
         velocidad = probabilidades();
-        aptitud = 999999;        
+        aptitud = 9999999; 
+        mejorAptitud=99999999;
     }
-    public  Particle(Capitals cap){ 
+    public  Particle(Capitals cap, double[][]dat){ 
+        distancias= dat;
         path = new int[cd];
         path = cap.Revolver();
         pBest = path.clone();
         velocidad = probabilidades();
-        aptitud = 999999;        
+        aptitud = 999999; 
+        mejorAptitud=99999999;
     }    
 
     //inicializar la velociadades en random 
@@ -40,7 +49,10 @@ public class Particle {
         double[][] par = new double[cd][cd];
         for (int i = 0; i<cd ; i++ ) {
             for (int j = 0; j<cd ; j++ ) {
-                par[i][j] = Math.random();
+                if (i==j)
+                    par[i][j]=0;
+                else
+                    par[i][j] = 100/distancias[i][j];
             }
         }
         return par;
@@ -55,20 +67,38 @@ public class Particle {
         }
         return par;
     }
+    public int[] mEnMenosUno(){
+        int[] par = new int[cd];
+       
+            for (int j = 0; j<cd ; j++ ) {
+                par[j] = -1;
+            }
+        
+        return par;
+    }
     
     public double[][] multi(double[] c, int[][] A){
 
         double [][] CxR = mEnCeros();
 //double [][] CxR = new double[cd][3];
-        for (int i=0; i<cd ; i++) {
-            int x = A[i][0];// aqui tendria el valor del primer elemento en la reesta
-            int y = A[i][1];
-            if (c[i]>1)
-                c[i]=1;
-            if (c[i]<0)
-                c[i]=0;
-            CxR[x][y]=c[i];
-            CxR[y][x]=c[i];
+        try{
+            for (int i=0; i<cd ; i++) {
+                int x = A[i][0];// aqui tendria el valor del primer elemento en la reesta
+                int y = A[i][1];
+                
+                if (x>=0 &&y>=0)
+                {
+                    if (c[i]>1)
+                        c[i]=1;
+                    if (c[i]<0)
+                        c[i]=0;
+                    CxR[x][y]=c[i];
+                    CxR[y][x]=c[i];
+                }
+            }
+        }
+        catch(Exception e){
+            e = e;
         }
 
         return CxR;
@@ -80,41 +110,70 @@ public class Particle {
         for (int i = 0; i < cd; i++) {
             for (int j = 0; j < cd; j++) {
                 A[i][j] = velocidad[i][j] * w;
+                if (A[i][j] > 1) {
+                    A[i][j]=1;
+                }
+                 
             }
         }        
         return A;
     }
 
     public double calcAptitud(double[][] dat){ 
+        
         aptitud = 0;
-        for(int i = 0; i < path.length-1; i++){
-            aptitud+= dat[path[i]][path[i+1]];
+        try{                    
+            for(int i = 0; i < path.length-1; i++){
+                aptitud+= dat[path[i]][path[i+1]];
+            }
+            aptitud+= dat[path[cd-1]][path[0]];
         }
-        aptitud+= dat[path[cd-1]][path[0]];
+        catch(Exception e){
+            e=e;
+        }
         return aptitud;
+    }
+    public double calcMejorAptitud(double[][] dat){ 
+        mejorAptitud = 0;
+        try{                    
+            for(int i = 0; i < cd-1; i++){
+                mejorAptitud+= dat[pBest[i]][pBest[i+1]];
+            }
+            mejorAptitud+= dat[pBest[cd-1]][pBest[0]];
+        }
+        catch(Exception e){
+            e=e;
+        }
+        return mejorAptitud;
     }
     //PBest - X || gBest - X
     public int[][] resta(int [] A, int [] B){ //Aquellos que están en A pero no están en B; !!! Misma posicion!
         
-        int [][] a = convert(A);
-        int [][] b = convert(B);
-        int [][] C = new int[cd][2];
-        boolean agrega = false;
+        
+        int [][] C = convert(A);//new int[cd][2];
+        
 
-        for (int i = 0; i < A.length ; i++ ) {
-                    
-            if ((a[i][0] == b[i][0] && a[i][1] == b[i][1]) ||
-                (a[i][1] == b[i][0] && a[i][0] == b[i][1])) {
-                agrega = true;
-            }
-            else{
-                agrega = false;                
-            }            
-            if (!agrega) {
-                C[i][0] = a[i][0];
-                C[i][1] = a[i][1];
-            }        
+        for (int i = 0; i < A.length-1 ; i++ ) {
+           for (int j=0; j<A.length-1; j++)
+           {
+                if ((A[i] == B[j] && A[i+1] == B[j+1]) ||
+                    ((A[i] == B[j+1] && A[i+1] == B[j]) ))
+                {
+                   C[i][0] = -1;
+                   C[i][1] = -1;
+                }
+           }
         }
+        for (int j=0; j<A.length-1; j++)
+           {
+            if ((A[cd-1] == B[0] && A[0] == B[cd-1]) ||
+                ((A[cd-1] == B[cd-1] && A[cd-1] == B[0]) ))
+            {
+               C[cd-1][0] = -1;
+               C[cd-1][1] = -1;
+            }
+            
+           }
         return C;
     }
 
@@ -144,16 +203,33 @@ public class Particle {
                 //Fórmula, pero no es suma, es ver cual suma es mayor y asignarla a velocidad[j][i]
                 //velocidad[j][i] = WxP[j][i] + multi(c, resta(pBest[j], path[j])) + multi(c2, resta(gBest[j], path[j]));
                 if (j != i){
-                    if (WxP[j][i] > mult[j][i]) {
+                    /*
+                   if (WxP[j][i] > mult[j][i]) {
                         r[j][i] = WxP[j][i];
                     }
                     else
                         r[j][i] = mult[j][i];
 
 
-                    if (mult2[j][i] > r[j][i]) {
+                    if (mult2[j][i] > r[j][i]) 
+                    {
                         r[j][i] = mult2[j][i];
-                    }       
+                    }    */   
+                    if (mult2[j][i] > mult[j][i]) 
+                        r[j][i] = mult2[j][i];
+                    
+                    else
+                        r[j][i] = mult[j][i];
+                
+                 }
+                
+            }
+        }
+        for (int i = 0; i < cd; i++) {
+            for (int j = 0; j < cd; j++) {
+                if (r[i][j] == 0 && i != j) {
+                    //r[i][j] = velocidad[i][j];
+                    r[i][j] = WxP[j][i];
                 }
             }
         }
@@ -190,6 +266,14 @@ public class Particle {
         }
         return false;
     }
+    public int containsIn(int[] arr, int v){
+        for(int i=0;i<arr.length;i++){
+            if(arr[i] == v){
+                return i;
+            }
+        }
+        return -1;
+    }
     public int[] getPath(){ return path; }
 
     public int[][] convert(int[] A){
@@ -210,7 +294,7 @@ public class Particle {
     
     public void position_updating(){
         double a = Math.random();
-        int[] New_X = new int[path.length];
+        int[] New_X = mEnMenosUno();
         int indx=0;
         int idxCut = 0;
         ArrayList<Double[]> cutV=new  ArrayList<>();
@@ -226,59 +310,78 @@ public class Particle {
                     cutV.add(x);
                 }
             }
-        
-        for (int j = 0; j < cd; j++) {
-            int i = 0;
-            int y=0;
-            int ciudad = cutV.get(j)[0].intValue();
-            int []arc;
-            
-            while (i < cd-1 && cutV.size()>0) {
-                if (!contains(New_X, ciudad)) {
-                    arc = MejorAristaCon(cutV,ciudad,idxCut);
-                    if (ciudad==arc[0])
-                        y=arc[1];
-                    else
-                        y=arc[0];  
-                    New_X[i] =ciudad;
-                    New_X[i+1] =y;
-                    cutV.remove(idxCut);
-                    i++;
-                }
-                
-            }
+        int cuentaNew=1;///Cuantos elementos tiene New_X
+        //New_X[0]=ThreadLocalRandom.current().nextInt(0, cd);
+        ArrayList<Double[]> candidato = generarCandidatos(cutV,New_X);
+        try{
+        New_X[0]=candidato.get(0)[0].intValue();
         }
-        
-        /*for (int i= 0; i<cd;i++)
+        catch (Exception e)
         {
-            int x= Integer.valueOf(cutV.get(i)[0].toString());
-            int y=0;
-            int[] opc;
-            if (!contains(New_X, x))
+        New_X[0]=3;
+        }
+       // for (int j = 0; j < cd; j++)
             {
-                do 
-                {
-                    int idx=0;
-                    opc = MejorAristaCon(cutV, x,idx);
-                    cutV.remove(idx);
-                    if (x==opc[0])
-                        y=opc[1];
-                    else
-                        y=opc[0];     
-                }while (!(!contains(New_X, y)||opc==null));
-                if (!contains(New_X, y))
-                    New_X[indx]=x;
-                    New_X[indx+1]=y;
-                    indx+=2;
                 
+                while (candidato.size()>0 && cuentaNew<cd)
+                {
+                   int idx=0;
+                   int prop;
+                   prop= MejorAristaCon(candidato,New_X[cuentaNew-1],idx);
+                   if (prop>0)
+                   {
+                       candidato = generarCandidatos(cutV,New_X);
+                       New_X[cuentaNew]=prop;
+                        cuentaNew++;
+                       
+                   }
+                   else
+                       break;
+                  
+                 
+                    
+                }
+                if (cuentaNew<cd)
+                {
+                    do
+                     {  
+                        int pos= containsIn(path,New_X[cuentaNew-1]);
+                        if (pos==cd-1)
+                        {pos =-1;}
+                           int Candidato = path[pos+1];
+                         if (!contains(New_X, Candidato)) {
+                             New_X[cuentaNew] = Candidato;
+                             cuentaNew++;
+                         }
+                         else
+                             break;
+
+                    }while (cuentaNew<cd);
+                }     
+                
+                while (cuentaNew<cd) {       
+                    int i= New_X[cuentaNew-1];               
+                    double probMax=0;
+                     for (int j = 0; j < cd; j++) {
+                        if (!contains(New_X, j)) {
+                            if (probMax < velocidad[i][j]) {
+                                New_X[cuentaNew] = j;
+                                probMax = velocidad[i][j];
+                            }
+                        }
+                    }
+                    cuentaNew++;
+                }
+                path = New_X;
             }
-            
-        }*/
     }
-    public int[] MejorAristaCon(ArrayList<Double[]> candidatos, int ciudad, int idx)
+        
+       
+    
+    public int MejorAristaCon(ArrayList<Double[]> candidatos, int ciudad, int idx)
     {
         int [] mejor = new int[2];
-        int prob=0;
+        double prob=0;
         for (int i=0; i<candidatos.size();i++)
         {
             if (candidatos.get(i)[0].intValue()==ciudad ||candidatos.get(i)[1].intValue()==ciudad)
@@ -287,11 +390,18 @@ public class Particle {
                 {
                     mejor[0]=candidatos.get(i)[0].intValue();
                     mejor[1]=candidatos.get(i)[1].intValue();
+                    prob=candidatos.get(i)[2].floatValue();
                     idx=i;
                 }
             
         }
-        return  mejor;
+        if (prob==0)
+        {
+            return -1;
+        }
+        if (mejor[0]==ciudad)
+            return  mejor[1];
+        return mejor[0];
     }
     public int[] MejorAristaCon(double[][] candidatos, int ciudad)
     {

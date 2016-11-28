@@ -5,8 +5,8 @@
  */
 package tsp;
 import static tsp.Constants.N_CIUDADES;
-import static tsp.Constants.C1min;
-import static tsp.Constants.C1max;
+import static tsp.Constants.wMin;
+import static tsp.Constants.wMax;
 import static tsp.Constants.C2min;
 import static tsp.Constants.C2max;
 import static tsp.Constants.C3min;
@@ -25,8 +25,9 @@ public class Swarm {
     double apGBest;//aptitud del mejor camino de todos los tiempos
     double c1,c2,c3;
     int iter;//factores de cambio
-    double k;
-    double wMin,wMax,w;//factor de inhercia
+    //double k;
+    int cambio;
+    //double wMin,wMax,w;//factor de inhercia
     Particle[] particulas;
      private double[][] datos= new double[N_CIUDADES][N_CIUDADES];
     
@@ -34,19 +35,27 @@ public class Swarm {
     
     public Swarm(){
         apGBest = 999999;
+        
         particulas = new Particle[N_PARTICLES];
+        CalcularDistancias(datos);
         for (int i=0; i<N_PARTICLES; i++)
         {
-            particulas[i]= new Particle(new Capitals());
+            particulas[i]= new Particle(new Capitals(), datos);
         }
-        CalcularDistancias(datos);
+        
     }
     public String Ejecutar()
     {
+        definirMejores();
         for (int i=0; i<IterMax;i++)
         {
+            cambio++;
             Generación();
             iter=i;
+            if (cambio>100) {
+                break;
+                
+            }
             
         }
        // return escribirSolucion();
@@ -54,29 +63,31 @@ public class Swarm {
         
     }
     public void definirMejores(){
-        double aptAnt = 0; 
+        double pBest = 0, act; 
         for (int i=0; i<N_PARTICLES; i++)
         {
-            aptAnt = particulas[i].getAptitud();
-            particulas[i].calcAptitud(datos);
-            if (particulas[i].getAptitud()<aptAnt){
+            pBest = particulas[i].calcMejorAptitud(datos);
+            act=particulas[i].calcAptitud(datos);
+            if (pBest>act){
                 particulas[i].setPbest(particulas[i].getPath());
             }
             if (particulas[i].getAptitud()<apGBest)
             {
                 gBest=particulas[i].getPath();
                 apGBest=particulas[i].getAptitud();
+                cambio =0;
             }
         }
     }
     public void Generación(){
-        definirMejores();
         actualizar();
         for (int i=0; i<N_PARTICLES; i++){
-            particulas[i].cambiarRutas(w,c1,c2,gBest);
-            particulas[i].calcVelocidad(w, c1, c2, gBest);
+            //particulas[i].cambiarRutas(w,c1,c2,gBest);
+            particulas[i].calcVelocidad(c1, c2, c3, gBest);
             particulas[i].position_updating();
+        
         }
+        definirMejores();
     }
     public void actualizar()
     {
@@ -85,11 +96,11 @@ public class Swarm {
         c1= (C1min-C1max)/IterMax*iter+C1max;
         c2= (C2max-C2min)/IterMax*iter+C2min;
         */
-        c1= (C1min-C1max)/IterMax*iter+C1max;
+        c1= (wMin-wMax)/(IterMax-1)*(iter-1)+wMax;
         c2= (C2min-C2max)/IterMax*iter+C2max;
-        c3= (C3min-C3max)/IterMax*iter+C3max;
-        double o= c1+c2;
-        k= 2 / Math.abs(2-o-Math.pow(Math.pow(Math.pow(o,2)-4*o,2),0.5));
+        c3= (C3max-C3min)/IterMax*iter+C3min;
+       // double o= c1+c2;
+        //k= 2 / Math.abs(2-o-Math.pow(Math.pow(Math.pow(o,2)-4*o,2),0.5));
     }
     public static void CalcularDistancias(double [][] dat){
         Capitals capi = new Capitals();
