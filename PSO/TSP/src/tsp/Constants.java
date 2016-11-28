@@ -27,11 +27,11 @@ public final class Constants {/*
     public static final double C3min=2;
     
     public static final double wMax=.5;
-    public static final double C2max=2;
-    public static final double C3max=2;
+    public static final double C2max=3;
+    public static final double C3max=3;
     
     public static final double Kmin=.20;
     public static final double Kmax=.90;
-    public static final int IterMax=100;
+    public static final int IterMax=10000;
     
 }

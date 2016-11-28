@@ -84,7 +84,8 @@ public class Swarm {
         for (int i=0; i<N_PARTICLES; i++){
             //particulas[i].cambiarRutas(w,c1,c2,gBest);
             particulas[i].calcVelocidad(c1, c2, c3, gBest);
-            particulas[i].position_updating();
+            particulas[i].position_updating(c1);
+            particulas[i].optimizar();
         
         }
         definirMejores();

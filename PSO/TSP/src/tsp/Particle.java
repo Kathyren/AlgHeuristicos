@@ -203,18 +203,7 @@ public class Particle {
                 //Fórmula, pero no es suma, es ver cual suma es mayor y asignarla a velocidad[j][i]
                 //velocidad[j][i] = WxP[j][i] + multi(c, resta(pBest[j], path[j])) + multi(c2, resta(gBest[j], path[j]));
                 if (j != i){
-                    /*
-                   if (WxP[j][i] > mult[j][i]) {
-                        r[j][i] = WxP[j][i];
-                    }
-                    else
-                        r[j][i] = mult[j][i];
-
-
-                    if (mult2[j][i] > r[j][i]) 
-                    {
-                        r[j][i] = mult2[j][i];
-                    }    */   
+                    
                     if (mult2[j][i] > mult[j][i]) 
                         r[j][i] = mult2[j][i];
                     
@@ -228,7 +217,6 @@ public class Particle {
         for (int i = 0; i < cd; i++) {
             for (int j = 0; j < cd; j++) {
                 if (r[i][j] == 0 && i != j) {
-                    //r[i][j] = velocidad[i][j];
                     r[i][j] = WxP[j][i];
                 }
             }
@@ -292,8 +280,9 @@ public class Particle {
         return C;
     }
     
-    public void position_updating(){
+    public void position_updating(double w){
         double a = Math.random();
+        double[][] WxP = WxVelocidades(w);
         int[] New_X = mEnMenosUno();
         int indx=0;
         int idxCut = 0;
@@ -314,13 +303,12 @@ public class Particle {
         //New_X[0]=ThreadLocalRandom.current().nextInt(0, cd);
         ArrayList<Double[]> candidato = generarCandidatos(cutV,New_X);
         try{
-        New_X[0]=candidato.get(0)[0].intValue();
+             New_X[0]=candidato.get(0)[0].intValue();
         }
         catch (Exception e)
         {
-        New_X[0]=3;
+            New_X[0]=3;
         }
-       // for (int j = 0; j < cd; j++)
             {
                 
                 while (candidato.size()>0 && cuentaNew<cd)
@@ -341,7 +329,7 @@ public class Particle {
                  
                     
                 }
-                if (cuentaNew<cd)
+               if (cuentaNew<cd)
                 {
                     do
                      {  
@@ -368,6 +356,11 @@ public class Particle {
                                 New_X[cuentaNew] = j;
                                 probMax = velocidad[i][j];
                             }
+                           /* if (probMax < WxP[i][j]) {
+                                New_X[cuentaNew] = j;
+                                probMax = WxP[i][j];
+                            }*/
+                            
                         }
                     }
                     cuentaNew++;
@@ -393,7 +386,6 @@ public class Particle {
                     prob=candidatos.get(i)[2].floatValue();
                     idx=i;
                 }
-            
         }
         if (prob==0)
         {
@@ -467,5 +459,18 @@ public class Particle {
          }
 
         return candidato;
+    }
+     public void optimizar() {
+        // Agregar su código de optimización
+        for (int i = 0; i < cd-2; i++) {
+            for (int j = i+1; j < cd-1; j++) {
+                if ((distancias[path[i]][path[i+1]] + distancias[path[j]][path[j+1]]) > 
+                        (distancias[path[i]][path[j]] + distancias[path[i+1]][path[j+1]])){
+                    int aux = path[j];
+                    path[j] = path[i+1];
+                    path[i+1] = aux;
+                }
+            }
+        }
     }
 }
