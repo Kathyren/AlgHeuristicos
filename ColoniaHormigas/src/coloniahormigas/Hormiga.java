@@ -184,5 +184,15 @@ public class Hormiga {
 
     public void optimizar() {
         // Agregar su código de optimización
+        for (int i = 0; i < tamañoProblema-2; i++) {
+            for (int j = i+1; j < tamañoProblema-1; j++) {
+                if ((distancias[tour[i]][tour[i+1]] + distancias[tour[j]][tour[j+1]]) > 
+                        (distancias[tour[i]][tour[j]] + distancias[tour[i+1]][tour[j+1]])){
+                    int aux = tour[j];
+                    tour[j] = tour[i+1];
+                    tour[i+1] = aux;
+                }
+            }
+        }
     }
 }

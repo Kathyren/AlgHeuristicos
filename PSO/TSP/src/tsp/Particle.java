@@ -310,4 +310,52 @@ public class Particle {
         }
         return  mejor;
     }
+    /*
+        Regresa todos los candidatos que no estan en X
+    */
+    public ArrayList<Double[]> generarCandidatos( ArrayList<Double[]> cut, int[] x)
+    {
+         ArrayList<Double[]> candidato= new ArrayList<>();
+         int cant = cut.size();
+         for (int i=0; i<cant;i++)
+         {
+             int v1= cut.get(i)[0].intValue();
+             int v2= cut.get(i)[1].intValue();
+             
+             if (!(contains(x, v2)||contains(x, v1)))
+             {
+                 candidato.add(cut.get(i));
+             }
+             
+         }
+        
+        
+        return candidato;
+    }
+    /**
+     * Regresa todos los candidatos uno de sus puntos no estan en x
+    */
+     public ArrayList<Double[]> generarCandidatos( ArrayList<Double[]> cut, int[] x, int ciudad)
+    {
+         ArrayList<Double[]> candidato= new ArrayList<>();
+         if (x.length<1)
+         {
+             candidato=cut;
+             return candidato;
+         }
+         int cant = cut.size();
+         for (int i=0; i<cant;i++)
+         {
+             int v1= cut.get(i)[0].intValue();
+             int v2= cut.get(i)[1].intValue();
+             if (ciudad==v1 || ciudad==v2)
+             if (!(contains(x, v2)&&ciudad==v1||contains(x, v1)&&ciudad!=v2))
+             {
+                 candidato.add(cut.get(i));
+             }
+             
+         }
+
+        return candidato;
+    }
 }

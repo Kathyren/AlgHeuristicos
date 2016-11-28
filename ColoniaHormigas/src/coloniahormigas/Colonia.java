@@ -106,13 +106,17 @@ public class Colonia {
     }
 
     private void actualizarFeromonaLocal(Hormiga local) {
+       
+    }
+
+    private void actualizarFeromonaGlobal() {
         int iF;
         int jF;
         double nuevaFeromona=0;
 
         for (int j = 0; j < tamañoProblema - 1; j++) {
-            iF = local.getTour()[j];
-            jF = local.getTour()[j + 1];
+            iF = mejor.getTour()[j];
+            jF = mejor.getTour()[j + 1];
            
            nuevaFeromona=1d/mejor.getAptitud();
             feromona[iF][jF] += nuevaFeromona;
@@ -122,8 +126,8 @@ public class Colonia {
         }
 
             
-        iF = local.getTour()[tamañoProblema - 1];
-        jF = local.getTour()[0];
+        iF = mejor.getTour()[tamañoProblema - 1];
+        jF = mejor.getTour()[0];
         
         feromona[iF][jF] += nuevaFeromona;
         feromona[jF][iF] += nuevaFeromona;
@@ -165,32 +169,29 @@ public class Colonia {
         }
 
             
-        iF = local.getTour()[tamañoProblema - 1];
-        jF = local.getTour()[0];
+        iF = mejor.getTour()[tamañoProblema - 1];
+        jF = mejor.getTour()[0];
        
         feromona[iF][jF] = nuevaFeromona;
         feromona[jF][iF] = nuevaFeromona;
         
         
-        
-    }
-
-    private void actualizarFeromonaGlobal() {
-        double mejorFeromona = 1d / mejor.getAptitud();
-        int iF;
-        int jF;
-
-        for (int i = 0; i < tamañoProblema - 1; i++) {
-            iF = mejor.getTour()[i];
-            jF = mejor.getTour()[i + 1];
-            feromona[iF][jF] += mejorFeromona;
-            feromona[jF][iF] += feromona[iF][jF];
+         for (int j = 0; j < tamañoProblema - 1; j++) {
+            for (int i=0; i<tamañoProblema-1;i++)
+            {
+                feromona[i][j]*= 0.99;
+                feromona[j][i] *= 0.99;
+            }
+            
+            
         }
 
-        iF = mejor.getTour()[tamañoProblema - 1];
-        jF = mejor.getTour()[0];
-        feromona[iF][jF] += mejorFeromona;
-        feromona[jF][iF] += feromona[iF][jF];
+            
+        feromona[0][tamañoProblema - 1]*= 0.99;
+        feromona[tamañoProblema - 1][0] *= 0.99;
+        
+        
+        
     }
 }
 
