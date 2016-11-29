@@ -141,6 +141,7 @@ public class Particle {
            }
             if (!existe)
                 {
+                    r = Math.random();
                     double x= r*c1;
                     if (velocidad[i][i+1]<r*c1)
                     {
@@ -251,11 +252,6 @@ public class Particle {
         {
            prob=Math.random();
            int cd1= New_X[cuentaNew-1];
-           if (cd1<0)
-           {
-               
-               cd1= New_X[cuentaNew-2];
-           }
            go=false;
            for (int j=0; j<cd;j++)
            {
@@ -329,26 +325,34 @@ public class Particle {
                     else
                         ruleta[j]=0;
                  }
-                 if (sumaProb==0)
-                     a=a;
+                 
+                  
                  if (go)
                 {
-                     a = Math.random();
-                     double probAc=0;
-                     int ind=-1;
-                     while (probAc < a) {
-                         if (ind>46)
-                             ind=-1;
-                         ind++;
-                              probAc += ruleta[ind]/sumaProb;
+                    if (sumaProb>0)
+                        
+                    {
+                        a = Math.random();
+                        double probAc=0;
+                        int ind=-1;
+                        while (probAc < a) {
+                            if (ind>46)
+                                ind=-1;
+                            ind++;
+                                 probAc += ruleta[ind]/sumaProb;
 
 
-                      }
-                     
-                     New_X[cuentaNew]=ind;
-                     if (New_X[cuentaNew]==New_X[cuentaNew-1])
-                         a=a;
-                     cuentaNew++;
+                         }
+
+                        New_X[cuentaNew]=ind;
+                        if (New_X[cuentaNew]==New_X[cuentaNew-1])
+                            a=a;
+                        cuentaNew++;
+                    }
+                    else
+                   {
+                       a=a;
+                    }
                 }
 
          }
@@ -455,8 +459,8 @@ public class Particle {
                         (distancias[path[i]][path[j]] + distancias[path[i+1]][path[j+1]])){
                     int aux = path[j];
                     path[j] = path[i+1];
-                    /*velocidad[path[i]][path[j]]+=100/distancias[i][j];
-                    velocidad[path[i+1]][path[j+1]]+=100/distancias[i][j];
+                    velocidad[path[i]][path[j]]+=100/distancias[i][j]*w;
+                    velocidad[path[i+1]][path[j+1]]+=100/distancias[i][j]*w;/*
                     velocidad[path[i]][path[i+1]]-=100/distancias[i][j];
                     velocidad[path[j]][path[j+1]]-=100/distancias[i][j];*/
                     path[i+1] = aux;

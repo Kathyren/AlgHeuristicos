@@ -23,7 +23,7 @@ import static tsp.Constants.IterMax;
 public class Swarm {
     int[] gBest;//Arreglo del mejor camino 
     double apGBest;//aptitud del mejor camino de todos los tiempos
-    double c1,c2,c3;
+    double c1=0.5,c2,c3;
     int iter;//factores de cambio
     //double k;
     int cambio;
@@ -83,12 +83,12 @@ public class Swarm {
         }
     }
     public void Generación(){
-        actualizar();
+        //actualizar();
         for (int i=0; i<N_PARTICLES; i++){
             //particulas[i].cambiarRutas(w,c1,c2,gBest);
             particulas[i].calcVelocidad(c1, c2, c3, gBest);
             particulas[i].position_updating();
-            particulas[i].optimizar();
+            //particulas[i].optimizar();
         
         }
         definirMejores();

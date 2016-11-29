@@ -55,7 +55,7 @@ public class Swarm {
             Generación();
             iter++;
             System.out.print(iter);
-            if (cambio>1000) {
+            if (cambio>100) {
                 break;
                 
             }

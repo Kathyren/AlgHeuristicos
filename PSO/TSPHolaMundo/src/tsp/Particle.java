@@ -205,10 +205,10 @@ public class Particle {
                 if (j != i){
                     
                     if (mult2[j][i] > mult[j][i]) 
-                        r[j][i] = mult2[j][i];
+                        r[j][i] = mult2[j][i]*w;
                     
                     else
-                        r[j][i] = mult[j][i];
+                        r[j][i] = mult[j][i]*w;
                 
                  }
                 
