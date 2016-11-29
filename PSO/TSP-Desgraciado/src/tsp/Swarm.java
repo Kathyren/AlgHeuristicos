@@ -47,12 +47,15 @@ public class Swarm {
     public String Ejecutar()
     {
         definirMejores();
+        iter=0;
         for (int i=0; i<IterMax;i++)
+        //while (true)
         {
             cambio++;
             Generación();
-            iter=i;
-            if (cambio>100) {
+            iter++;
+            System.out.print(iter+"-");
+            if (cambio>1000) {
                 break;
                 
             }
@@ -84,7 +87,7 @@ public class Swarm {
         for (int i=0; i<N_PARTICLES; i++){
             //particulas[i].cambiarRutas(w,c1,c2,gBest);
             particulas[i].calcVelocidad(c1, c2, c3, gBest);
-            particulas[i].position_updating(c1);
+            particulas[i].position_updating();
             particulas[i].optimizar();
         
         }
@@ -117,51 +120,10 @@ public class Swarm {
     }
 
     private String escribirSolucion() {
-        String R="     ";
+        String R="";
         for (int i=0; i<N_CIUDADES; i++)
         {
-            //2-0-7-8-6-5-11-10-4-9-3-1
-            String letra="";
-           switch (gBest[i])
-           {
-               case 2:
-                   letra="¡";
-                   break;
-               case 0:
-                   letra="H";
-                   break;
-               case 7:
-                   letra="o";
-                   break;
-               case 8:
-                   letra="l";
-                   break;
-                case 6:
-                   letra="a";
-                   break;
-               case 5:
-                   letra="_";
-                   break;
-               case 11:
-                   letra="M";
-                   break;
-               case 10:
-                   letra="u";
-                   break;
-                case 4:
-                   letra="n";
-                   break;
-               case 9:
-                   letra="d";
-                   break;
-               case 3:
-                   letra="o";
-                   break;
-               case 1:
-                   letra="!";
-                   break;
-           }
-            R+= letra+" - ";
+            R+= String.valueOf(gBest[i])+" - ";
             
         }
         return R;

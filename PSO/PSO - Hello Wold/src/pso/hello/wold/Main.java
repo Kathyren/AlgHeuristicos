@@ -78,7 +78,7 @@ public class Main extends javax.swing.JFrame {
         
         model.clear();
         //               
-        swarm = new Swarm(200, // 50 ->  0
+        swarm = new Swarm(300, // 50 ->  0
                 50,50,         // 50 -> 50
                  0,50);        //  0 -> 50
         insertarLista();
